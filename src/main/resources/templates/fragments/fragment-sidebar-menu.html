@@ -1,0 +1,31 @@
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu" data-th-fragment="sidebar-menu">
+    <div class="menu_section" style="margin-top: 75px">
+        <h3>Admin</h3>
+        <ul class="nav side-menu">
+            <li><a><i class="fa fa-user"></i>Tài khoản<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a th:href="@{~/admin/list-user}">Danh sách tài khoản</a></li>
+                    <li><a th:href="@{~/admin/list-role}">Danh sách quyền</a></li>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-cutlery"></i>Món ăn<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a th:href="@{~/admin/list-food}">Danh sách món ăn</a></li>
+                    <li><a th:href="@{~/admin/list-foodc}">Danh sách loại món ăn</a></li>
+                </ul>
+            </li>
+            
+            <li><a th:href="@{~/admin/list-room}" ><i class="fa fa-home"></i> Danh sách phòng </a>
+            </li>
+            <li><a th:href="@{~/admin/list-bill}" ><i class="fa fa-file"></i> Danh sách hóa đơn </a>
+            </li>
+            <li><a><i class="fa fa-edit"></i> Thống kê doanh thu<span class="fa fa-chevron-down"></span></a>
+            	<ul class="nav child_menu">
+                    <li><a th:href="@{~/admin/list-revenue-year/2019}">Danh sách doanh thu theo tháng, năm</a></li>
+                    <li><a th:href="@{~/admin/list-revenue-day}">Danh sách doanh thu theo ngày</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</div>

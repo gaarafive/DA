@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}">
+<head>
+    <title>Plain Page</title>
+    <link rel="stylesheet" type="text/css" href="/admin/input-image.css">
+</head>
+
+<body>
+<div class="right_col" role="main" data-layout-fragment="content">
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Food</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="Container">
+    	
+    	<div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                  <div class="row">
+                  		<div class="col-md-9 col-sm-9">
+                  			<form class="form-horizontal form-label-left" action="#" th:action="@{/admin/add-foodc}" th:object="${foodc}" method="post"  enctype="multipart/form-data">
+
+	                      <div class="form-group">
+	                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Name
+	                        </label>
+	                        <div class="col-md-7 col-sm-7 col-xs-12">
+	                          <input class="form-control col-md-7 col-xs-12" id="name" required="required" type="text" th:field="*{name}">
+	                        </div>
+	                      </div>
+	                      <br>
+	                      <div class="ln_solid"></div>
+	                      <div class="form-group">
+	                        <div class="col-md-7 col-sm-7 col-xs-12 col-md-offset-3">
+	                          <a class="btn btn-primary" type="button" th:href="@{/admin/list-foodc}">Cancel</a>
+	                          <button class="btn btn-success" type="submit">Save</button>
+	                        </div>
+	                      </div>
+                    	</form>
+                  		</div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+	<div class="container">
+    	<div class="row">
+    	<div th:if="${reponsecode == '1'}" class="alert alert-success alert-dismissible fade in" role="alert">
+                    <button class="close" aria-label="Close" type="button" data-dismiss="alert"><span aria-hidden="true">X</span>
+                    </button>
+                    <strong>Đã thêm thành công!!</strong>
+                  </div>
+    	</div>
+    	<div th:if="${reponsecode == '0'}" class="alert alert-error alert-dismissible fade in" role="alert">
+                    <button class="close" aria-label="Close" type="button" data-dismiss="alert"><span aria-hidden="true">X</span>
+                    </button>
+                    <strong>Lỗi! </strong> <span th:text="${reponsemessage}"> </span>
+                  </div>
+    	</div>
+    </div>
+    
+</div>
+</body>
+</html>
+<script>
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imageVideo1')
+                .attr('src', e.target.result)
+                .width(150)
+                .height(200);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+

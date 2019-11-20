@@ -1,0 +1,113 @@
+@charset "ISO-8859-1";
+#dropArea {
+    border: 1px dashed #c3c3cc;
+    position: relative;
+    text-align: center;
+    padding: 20px 0 10px;
+}
+#dropArea .e-upload .e-upload-files {
+    text-align: initial;
+    border-top: none;
+}
+#dropArea .e-upload-files .e-file-delete-btn.e-icons, #dropArea .e-upload-files .e-file-remove-btn.e-icons {
+    top: 120px;
+        background-color: white;
+        border-radius: 50%;
+        font-size: 12px;
+        left: 80px;
+    }
+#dropArea .e-upload-files li .e-file-remove-btn.e-icons.e-upload-icon {
+        font-size: 14px;
+        left: 20px;
+    }
+
+    #dropArea .e-upload-files li:hover .e-icons {
+        visibility: visible;
+    }
+
+    #dropArea .e-upload-files li .e-icons {
+        visibility: hidden;
+    }
+
+	@@font-face {
+	    font-family: 'Uploader_Icon';
+	    src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj1tSfIAAAEoAAAAVmNtYXDnEOdVAAABiAAAADZnbHlmoZcPvgAAAcgAAABAaGVhZBLQTSUAAADQAAAANmhoZWEINQQDAAAArAAAACRobXR4CAAAAAAAAYAAAAAIbG9jYQAgAAAAAAHAAAAABm1heHABDgAdAAABCAAAACBuYW1lQySinQAAAggAAAIxcG9zdLfl0usAAAQ8AAAAMgABAAAEAAAAAFwEAAAAAAAD2AABAAAAAAAAAAAAAAAAAAAAAgABAAAAAQAA2vKJUF8PPPUACwQAAAAAANftBBgAAAAA1+0EGAAAAAAD2AP4AAAACAACAAAAAAAAAAEAAAACABEAAgAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQQAAZAABQAAAokCzAAAAI8CiQLMAAAB6wAyAQgAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wDnAAQAAAAAXAQAAAAAAAABAAAAAAAABAAAAAQAAAAAAAACAAAAAwAAABQAAwABAAAAFAAEACIAAAAEAAQAAQAA5wD//wAA5wD//wAAAAEABAAAAAEAAAAAAAAAIAAAAAIAAAAAA9gD+AAHABAAADchESMVITUjEzM3ETMRFzMBKAOwPvzMPp1mtUC1Zv7FCAF6vb0BO7X+EAHwtQE7AAAAABIA3gABAAAAAAAAAAEAAAABAAAAAAABAAgAAQABAAAAAAACAAcACQABAAAAAAADAAgAEAABAAAAAAAEAAgAGAABAAAAAAAFAAsAIAABAAAAAAAGAAgAKwABAAAAAAAKACwAMwABAAAAAAALABIAXwADAAEECQAAAAIAcQADAAEECQABABAAcwADAAEECQACAA4AgwADAAEECQADABAAkQADAAEECQAEABAAoQADAAEECQAFABYAsQADAAEECQAGABAAxwADAAEECQAKAFgA1wADAAEECQALACQBLyBVcGxvYWRlclJlZ3VsYXJVcGxvYWRlclVwbG9hZGVyVmVyc2lvbiAxLjBVcGxvYWRlckZvbnQgZ2VuZXJhdGVkIHVzaW5nIFN5bmNmdXNpb24gTWV0cm8gU3R1ZGlvd3d3LnN5bmNmdXNpb24uY29tACAAVQBwAGwAbwBhAGQAZQByAFIAZQBnAHUAbABhAHIAVQBwAGwAbwBhAGQAZQByAFUAcABsAG8AYQBkAGUAcgBWAGUAcgBzAGkAbwBuACAAMQAuADAAVQBwAGwAbwBhAGQAZQByAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAHUAcwBpAG4AZwAgAFMAeQBuAGMAZgB1AHMAaQBvAG4AIABNAGUAdAByAG8AIABTAHQAdQBkAGkAbwB3AHcAdwAuAHMAeQBuAGMAZgB1AHMAaQBvAG4ALgBjAG8AbQAAAAACAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBAgEDAAhVcGxvYWRlcgAAAAA=) format('truetype');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+
+	#dropArea .e-upload .e-upload-files .e-icons.e-upload-icon {
+	    font-family: 'Uploader_Icon';
+	    speak: none;
+	    font-size: 16px;
+	    font-style: normal;
+	    font-weight: normal;
+	    font-variant: normal;
+	    text-transform: none;
+	    line-height: 1;
+	    -webkit-font-smoothing: antialiased;
+	    -moz-osx-font-smoothing: grayscale;
+	}
+
+    #dropArea .e-upload .e-upload-files .e-icons.e-upload-icon::before {
+        content: '\e700';
+    }
+
+	#dropArea .e-upload .e-upload-files .e-icons:not(.e-uploaded):hover {
+	    background-color: #e6e6e6;
+	    border-color: #adadad;
+	    color: #333;
+	}
+
+	.highcontrast #dropArea .e-upload-files .e-file-remove-btn.e-icons, .highcontrast #dropArea .e-upload-files .e-file-delete-btn.e-icons {
+	    background-color: #ffd939;
+	}
+	
+	.highcontrast #dropArea .e-upload .e-upload-files .e-file-delete-btn.e-icons::before, .highcontrast #dropArea .e-upload .e-upload-files .e-file-remove-btn.e-icons::before {
+	    color: black;
+	}
+	
+	#dropArea .e-upload .e-upload-files .e-upload-file-list {
+	    border: 0;
+	    display: inline-block;
+	    width: 165px;
+	}
+
+	.upload-image {
+	    width: 150px;
+	    height: 150px;
+	    display: inline-flex;
+	    background-size: contain;
+	    margin: 7px;
+	    text-align: center;
+	    line-height: 10;
+	    border-radius: 5px;
+	}
+
+    .upload-image:after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: inherit;
+        height: inherit;
+        background: lightgray url('http://via.placeholder.com/300?text=Loading...') no-repeat center;
+        color: transparent;
+        border-radius: 5px;
+    }
+#dropArea progress {
+    border: none;
+    background: #fff;
+}
+
+.highcontrast #dropArea progress {
+    border: none;
+    background: black;
+}
+#dropArea{
+	margin:auto;
+}
+.upload-image:after {
+    top: 20px;
+    left: 108px;
+}

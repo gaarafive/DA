@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+    </head>
+	
+    <body>
+
+        <div th:fragment="content-order-detail">
+            <form id ="fbill" class="form-horizontal form-label-left" action="#" th:action="@{/admin/add-bill}" th:object="${bill}" method="post" >
+            <div class="row">
+					<div class="col-sm-3">
+					  <input type="number" name="id" th:value="${bill.id}"  style="display: none;">
+		              <label>Phòng:</label>
+							<select id = "slroom" tabindex="-1" class="select2_single form-control" th:field="*{idroom}">
+		                       <option th:each="r : ${rooms}" th:value="${r.id}" th:text="${r.name}" th:data-price="${r.price}"></option>
+		                    </select>
+		              </div>
+		              <div class="col-sm-3">
+							<label>Thanh toán: </label>
+			                 <div>
+			                        <select class="form-control" id="role" th:field="*{status}">
+					                    <option th:value="'1'" th:text="Paid"></option>
+					                    <option th:value="'0'" th:text="UnPaid"></option>
+				                    </select>
+			                </div>
+			               
+		              </div>
+		              <div class="col-sm-3">
+		              <label>Tên khách hàng:</label>
+					    <input id="txtnamecustomer" type="text" class="form-control" autocomplete="off" th:field="*{nameCustomer}" required="required">
+		              </div>
+		              <div class="col-sm-3">
+		              	<label id="txttimeuse">Thời gian sử dụng (phút):</label>
+		              	<input type="number" th:value="${bill.totalHour}"  readonly="readonly">
+		              </div>
+		              <div class="col-sm-3">
+		              <label>Giờ bắt đầu:</label>
+					    <input id="txtstarthour" type="time" class="form-control" autocomplete="off" th:field="*{startHour}" required="required">
+		              </div>
+		              <div class="col-sm-3">
+		              <label>Giờ kết thúc:</label>
+					    <input id="txtendhour" type="time" class="form-control" autocomplete="off" th:field="*{endHour}">
+		              </div>
+            </div>
+		              
+			</form>  
+        </div>
+        <div class="row" th:fragment="content-menu-food">
+        
+		  			  <div class="col-sm-3">
+							<h3>Thực đơn: </h3>
+		              </div>
+		              <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Image</th>
+                          <th>Name</th>
+                          <th>Number</th>
+                          <th>Category</th>
+                          <th>Price</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+	                        <tr th:if="${bill.foods == null}">
+						            <td colspan="6"> No foods Available </td>
+						    </tr>
+					        <tr th:each="food : ${bill.foods}">
+					            <td><image th:if="${food.image}!=''" th:src="@{'~/upload/' + ${food.image}}" style="max-width:90px"></image></td>
+					            <td><span th:text="${food.name}"></span></td>
+					            <td>
+					            	<input type="number" class="form-control number-food" th:min="0" th:max="${food.number}" th:value="${food.numberfood}">
+					            	<input type="number" name = "id-food-order" th:value="${food.idOrderfood}" style="display:none;"></input>
+					            	<input type="number" name = "price" th:value="${food.price}" style="display:none;"></input>
+					            	<input type="number" name = "id-room" th:value="${bill.idroom}" style="display:none;"></input>
+					            </td>
+					            <td><span th:text="${food.category==null}? '': ${food.category}"></span></td>
+					            <td>
+					            	<span class="price-food" th:text="${ food.price * food.numberfood }"></span>
+					            </td>
+					            <td>
+					            <a class="btn btn-danger btn-xs tbn-deleorderfood" href="#"><i class="fa fa-trash-o"></i> Delete </a>
+					            </td>
+					        </tr>
+					    </tbody>
+                      </tbody>
+					</table>
+					<div class="col-sm-3">
+							<h3>Amount: </h3>
+		            </div>
+				                          <div class="table-responsive">
+				                            <table class="table">
+				                              <tbody>
+				                                <tr>
+				                                  <td style="width:50%">Tổng tiền giờ:</th>
+				                                  <td id="showtotalhour" th:text="${bill.hourprice  + ' VNĐ'}">0 VNĐ</td>
+				                                </tr>
+				                                <tr>
+				                                  <td style="width:50%">Tổng tiền món ăn:</th>
+				                                  <td id="showtotalfood" th:text="${bill.foodprice + ' VNĐ'}">0 VNĐ</td>
+				                                </tr>
+				                                <tr>
+				                                  <td style="width:50%">Tổng tiền thanh toán:</th>
+				                                  <td id="showtotal" th:text="${bill.totalprice + ' VNĐ'}">0 VNĐ</td>
+				                                </tr>
+				                              </tbody>
+				                            </table>
+				                          </div>
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+					<!-- Popper JS -->
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+					
+					<!-- Latest compiled JavaScript -->
+					<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+					<script src="/script/empl/func.js"></script>
+		  </div>
+    </body>
+</html>

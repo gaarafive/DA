@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Karaoke</title>
+		<meta name="description" content="Karaoke" />
+		<meta name="keywords" content="Karaoke" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" th:href="@{'~/css/demo.css'}" />
+		<link rel="stylesheet" type="text/css" th:href="@{'~/css/component.css'}" />
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<!-- Font Awesome -->
+    	<link href="/webjars/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<style>
+		.split {
+		  height: 100%;
+		  width: 50%;
+		  position: fixed;
+		  z-index: 1;
+		  top: 0;
+		  overflow-x: hidden;
+		  padding-top: 0px;
+		}
+
+		.left {
+		  left: 0;
+		}
+
+		.right {
+		  right: 0;
+		  background-color: #efefef;
+		}
+		
+		.mediabox{
+			max-width: 210px;
+		}
+		.mediabox > *{
+			text-align: center;
+		}
+		.main {
+		    width: 50%;
+		    margin: 50px auto;
+		}
+		
+		/* Bootstrap 4 text input with search icon */
+		
+		.has-search .form-control {
+		    padding-left: 2.375rem;
+		}
+		
+		.has-search .form-control-feedback {
+		    position: absolute;
+		    z-index: 2;
+		    display: block;
+		    width: 2.375rem;
+		    height: 2.375rem;
+		    line-height: 2.375rem;
+		    text-align: center;
+		    pointer-events: none;
+		    color: #aaa;
+		}
+		#div-button{
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+		}
+		#none-selected{
+		    text-align: center;
+		    margin-top: 100px;
+		}
+		#order{
+		    margin-top: 16px;
+		}
+		#section-1 .active{
+			background-color: chartreuse;
+		}
+		#section-1 .inactive{
+			background-color: chocolate;
+		}
+		.mediabox:hover {
+		  background-color: #efefef !important;
+		  cursor: pointer;
+		}
+		.modal .modal-dialog {
+		  width: 80%;
+		}
+		.selected{
+			display: block !important;
+		}
+		#div-button button{
+			width:12.5%;
+		}
+	</style>
+	<body>
+		<!-- Modal -->
+		<div class="modal fade" id="openroom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalCenterTitle">Mở phòng</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form id="formopenroom" class="form-horizontal form-label-left" action="#" th:object="${bill}" method="post">
+		      <div class="modal-body">
+		      		  <div class="form-group">
+					    <label for="cname">Tên nhân viên:</label>
+					    <input type="text" class="form-control"  name="nameEmployee" th:value="${nameofuser}" readonly="readonly">
+					  </div>
+		     	 	  <div class="form-group">
+					    <label for="cname">Tên khách hàng:</label>
+					    <input type="text" class="form-control"  th:field="*{nameCustomer}" required="required">
+					  </div>
+					  <div class="form-group">
+		              <label >Phòng </label>
+		              <div>
+							<select id = "room" tabindex="-1" class="select2_single form-control" required="required" th:field="*{room}">
+		                       <option th:each="r : ${rooms}" th:value="${r.id}" th:text="${r.name}" th:data-price="${r.price}"></option>
+		                    </select>
+		              </div>
+		              </div>
+					  <div class="form-group">
+					    <label for="startHour">Giờ mở:</label>
+					    <input type="time" class="form-control" id="startHour" th:field="*{startHour}" autocomplete="off">
+					  </div>
+					  <div class="form-group">
+					    <label for="endHour">Giờ đóng:</label>
+					    <input type="time" class="form-control" id="endHour" th:field="*{endHour}"  autocomplete="off">
+					  </div>
+					  <div class="form-group">
+					    <label for="note">Chú thích:</label>
+					    <input type="text" class="form-control" th:field="*{note}">
+					  </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button id="saveopenroom" class="btn btn-primary" type="submit">Mở phòng</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+		<div class="split left">
+		  <div class="centered">
+			<div class="container">
+			<div id="tabs" class="tabs">
+				<nav>
+					<ul>
+						<li><a href="#section-1" class="icon-shop"><span>Room</span></a></li>
+						<li><a href="#section-2" class="icon-food"><span>Food</span></a></li>
+					</ul>
+					
+				</nav>
+				<div th:replace="employee/emp_fragments/left-content :: content-room-food">
+				</div>
+			</div>
+			</div>
+		  </div>
+		</div>
+		<div class="split right">
+			<nav class="topnav navbar navbar-expand-sm navbar-dark" style="background-color: #47a3da">
+			  <!-- Links -->
+			  <ul class="navbar-nav ml-auto">
+			    <!-- Dropdown -->
+			    <li class="nav-item dropdown">
+			      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" th:text="${'Welcome! ' + nameofuser}">
+			      		Welcome! 
+			      </a>
+			      <div class="dropdown-menu">
+			        <a class="dropdown-item" th:href="@{'~/admin/index'}">Admin</a>
+			        <a class="dropdown-item" th:href="@{'~/perform_logout'}">Logout</a>
+			      </div>
+			    </li>
+			  </ul>
+			</nav>
+		  <div id = "selected-room" class="container centered"  style="display:none;">
+		  	<div id="order">
+		  		<div id="room-selected">
+		  			<div class="row" th:replace="employee/emp_fragments/right-content :: content-order-detail"></div>
+		  		</div>
+		  		<br>
+		  		<div id="menu-food">
+		  			<div class="row" th:replace="employee/emp_fragments/right-content :: content-menu-food"></div>
+		  		</div>
+		  	
+		  	</div>
+		  	<div id="div-button" class="row">
+		  		<button id="luulai" type="button" class="btn btn-info">Lưu lại</button>
+		  		<button id="thanhtoan" type="button" class="btn btn-success">Thanh toán</button>
+		  		<button id="xuathoadon" type="button" class="btn btn-secondary">Xuất hóa đơn</button>
+		  		<button id="inhoadon" type="button" class="btn btn-warning">In hóa đơn</button>
+		  	</div>
+		  </div>
+		  <h3 id="none-selected" class="selected" style="display:none;">No selected room</h3>
+		</div>
+	</body>
+
+	<script th:src="@{'~/js/cbpFWTabs.js'}"></script>
+	<script th:src="@{'~/script/empl/home.js'}"></script>
+	<script th:src="@{'~/script/empl/func.js'}"></script>
+</html>
+
+	

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}">
+<head>
+    <title>Plain Page</title>
+    <link rel="stylesheet" type="text/css" href="/admin/input-image.css">
+</head>
+
+<body>
+<div class="right_col" role="main" data-layout-fragment="content">
+    <div class="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Food</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="Container">
+		<!-- The modal -->
+		<div class="modal fade" id="largeShoes" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="modalLabelLarge">Chọn món ăn</h4>
+		</div>
+		
+		<div class="modal-body">
+			<table id="datatable2" class="table table-striped table-bordered display" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Mã số</th>
+                          <th>Image</th>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Number</th>
+                          <th>Category</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:if="${foods.empty}">
+					            <td colspan="2"> No Users Available </td>
+					        </tr>
+					        
+					        <tr th:each="food : ${foods}">
+					            <td th:text="${food.id}"></td>
+					            <td><image th:if="${food.image}" th:src="@{food.image!=null ? '~/upload/' + ${food.image} : '' }" style="max-width:90px"></image></td>
+					            <td><span th:text="${food.name}"></span></td>
+					            <td><span th:text="${food.price}"></span></td>
+					            <td><span th:text="${food.number}"></span></td>
+					            <td><span th:text="${food.foodCategory==null}? '': ${food.foodCategory.name}"></span></td>
+					            <td><a th:href="@{'~/admin/edit-food/' + ${food.id}}"> Edit </a>| <a th:href="@{'~/admin/delete-food/' + ${food.id}}">Delete </a></td>
+					        </tr>
+					   </tbody>
+
+					</table>
+					<div style="text-align: right;">
+		                   <a class="btn btn-primary" type="button" id="modalcancel">Cancel</a>
+		                   <button class="btn btn-success" type="submit" id="modalsave">Save</button>
+		            </div>
+		</div>
+		
+		</div>
+		</div>
+		</div>
+    	<div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                  	<div class="row">
+                  		<div class="col-md-12 col-sm-12">
+                  			<form id ="fbill" class="form-horizontal form-label-left" action="#" th:action="@{/admin/add-bill}" th:object="${bill}" method="post" >
+							<div class="row">
+								<div class="form-group col-md-6">
+		                        <label class="control-label col-md-2 col-sm-2 col-xs-12" >Tên nhân viên
+		                        </label>
+		                        <div class="col-md-7 col-sm-7 col-xs-12">
+							    	<select tabindex="-1" class="select2_single form-control" required="required" id="employee" th:field="*{nameEmployee}">
+							    	<option th:value="${currentUser.id}" th:text="${currentUser.name}"></option>
+		                            <option th:if="${users!=null}" th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+		                          </select>
+		                        </div>
+		                      </div>
+			                      <div class="form-group col-md-6">
+			                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Tên khách hàng
+			                        </label>
+			                        <div class="col-md-7 col-sm-7 col-xs-12">
+			                          <input class="form-control col-md-7 col-xs-12" id="namecustomer" required="required" type="text" th:field="*{nameCustomer}">
+			                        </div>
+			                      </div>
+		                      <div class="form-group col-md-6">
+		                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Ngày tạo
+		                        </label>
+		                        <div class="col-md-7 col-sm-7 col-xs-12">
+		                          	<div class="input-group date" id="myDatepicker">
+	                            		<input class="form-control" type="text" required="required" th:field="*{date}">
+			                            <span class="input-group-addon">
+			                               <span class="glyphicon glyphicon-calendar"></span>
+			                            </span>
+			                        </div>
+		                        </div>
+		                      </div>
+		                      <div class="form-group col-md-6">
+		                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Giờ bắt đầu
+		                        </label>
+		                        <div class="col-md-7 col-sm-7 col-xs-12">
+		                          	<div class="input-group date myDatepicker3">
+			                            <input  th:field="*{startHour}" class="form-control" type="text" required="required" id="starthour">
+			                            <span class="input-group-addon">
+			                               <span class="glyphicon glyphicon-calendar"></span>
+			                            </span>
+			                        </div>
+		                        </div>
+		                      </div>
+		                      <div class="form-group col-md-6">
+		                        <label class="control-label col-md-2 col-sm-2 col-xs-12" >Phòng
+		                        </label>
+		                        <div class="col-md-7 col-sm-7 col-xs-12">
+							    	<select id = "room" tabindex="-1" class="select2_single form-control" required="required" th:field="*{room}">
+		                            <option th:each="r : ${rooms}" th:value="${r.id}" th:text="${r.name}" th:data-price="${r.price}"></option>
+		                          </select>
+		                        </div>
+		                      </div>
+		                      <div class="form-group col-md-6">
+		                        <label class="control-label col-md-2 col-sm-2 col-xs-12" >Giờ kết thúc
+		                        </label>
+		                        <div class="col-md-7 col-sm-7 col-xs-12">
+		                          	<div class="input-group date myDatepicker3">
+			                            <input class="form-control" type="text" required="required"  th:field="*{endHour}" id="endhour" name="">
+			                            <span class="input-group-addon">
+			                               <span class="glyphicon glyphicon-calendar"></span>
+			                            </span>
+			                        </div>
+		                        </div>
+		                      </div>
+		                        <div class="form-group col-md-6">
+			                        <label class="control-label col-md-2 col-sm-2 col-xs-12" >Thanh toán:
+			                        </label>
+			                        <div class="col-md-7 col-sm-7 col-xs-12">
+			                        <select class="form-control" id="role" th:field="*{status}">
+					                    <option th:value="'1'" th:text="Paid"></option>
+					                    <option th:value="'0'" th:text="UnPaid"></option>
+				                    </select>
+			                        </div>
+			                  </div>
+			                  <div class="form-group col-md-6">
+			                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Tổng giờ
+			                        </label>
+			                        <div class="col-md-7 col-sm-7 col-xs-12">
+			                          <input class="form-control col-md-7 col-xs-12" id="totalhour" required="required" type="text" th:field="*{totalHour}" readonly="readonly">
+			                        </div>
+			                  </div>
+		                      
+		                      <div class="form-group col-md-6">
+		                        <label class="control-label col-md-2 col-sm-2 col-xs-12" >Ghi chú
+		                        </label>
+		                        <div class="col-md-7 col-sm-7 col-xs-12">
+		                          	<textarea th:field="*{note}" class="form-control" id="message" data-parsley-trigger="keyup" data-parsley-validation-threshold="10"  data-parsley-maxlength="200" data-parsley-id="40"></textarea>
+		                        </div>
+		                      </div>
+		                      </div>
+		                     
+			                  
+							</div>
+	                       <div class="row">
+			              <div class="col-md-12 col-sm-12 col-xs-12">
+			                <div class="x_panel">
+			                    <div class="x_title">
+			                       <a class="btn btn-success" type="button" data-toggle="modal" data-target="#largeShoes">Thêm móm ăn</a>
+			                    </div>
+			                    
+			                    <table id="datatable" class="table table-striped table-bordered">
+			                      <thead>
+			                        <tr>
+			                          <th>Hình ảnh</th>
+			                          <th>Tên</th>
+			                          <th>Số lượng</th>
+			                          <th>Giá</th>
+			                        </tr>
+			                      </thead>
+			                      <tbody>
+			                      		
+			                      </tbody>
+								</table>
+			    				</div>
+							</div>
+							</div>
+							<div class="row">
+		                      <div class="ln_solid col-md-12"></div>
+			                      <div class="x_title">
+			                       <!-- <a class="btn btn-success" type="button" id="count" >Tính</a> -->
+			                    	</div>
+			                        <div class="col-md-12" >
+			                          <div class="col-xs-6">
+				                          <p class="lead">Amount</p>
+				                          <div class="table-responsive">
+				                            <table class="table">
+				                              <tbody>
+				                                <tr>
+				                                  <th style="width:50%">Tổng tiền giờ:</th>
+				                                  <td id="showtotalhour">0 VNĐ</td>
+				                                </tr>
+				                                <tr>
+				                                  <th style="width:50%">Tổng tiền món ăn:</th>
+				                                  <td id="showtotalfood">0 VNĐ</td>
+				                                </tr>
+				                                <tr>
+				                                  <th style="width:50%">Tổng tiền thanh toán:</th>
+				                                  <td id="showtotal">0 VNĐ</td>
+				                                </tr>
+				                              </tbody>
+				                            </table>
+				                          </div>
+				                        </div>
+			                        </div>
+		                      </div>
+	                      <br>
+	                      
+	                      <div class="row">
+	                      	<div class="ln_solid col-md-12"></div>
+		                      <div class="form-group">
+		                        <div class="col-md-12" style="text-align: right;">
+		                          <a class="btn btn-primary" type="button" th:href="@{/admin/list-bill}">Cancel</a>
+		                          <button class="btn btn-success" type="submit">Save</button>
+		                        </div>
+		                      </div>
+	                      </div>
+	                      </div>
+                    	</form>
+                  		</div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+	<div class="container">
+    	<div class="row">
+    	<div th:if="${reponsecode == '1'}" class="alert alert-success alert-dismissible fade in" role="alert" id="success">
+                    <button class="close" aria-label="Close" type="button" data-dismiss="alert"><span aria-hidden="true">X</span>
+                    </button>
+                    <strong>Thêm thành công!</strong>
+                  </div>
+    	</div>
+    	<div th:if="${reponsecode == '0'}" class="alert alert-error alert-dismissible fade in" role="alert">
+                    <button class="close" aria-label="Close" type="button" data-dismiss="alert"><span aria-hidden="true">X</span>
+                    </button>
+                    <strong>Lỗi! </strong> <span th:text="${reponsemessage}"> </span>
+                  </div>
+    	</div>
+</div>
+
+</body>
+</html>
+<script>
+$('#myDatepicker').datetimepicker();
+
+$('#myDatepicker2').datetimepicker({
+    format: 'DD/MM/YYYY'
+});
+
+$('.myDatepicker3').datetimepicker({
+    format: 'hh:mm'
+});
+
+
+$("#datetimepicker6").on("dp.change", function(e) {
+    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+});
+
+$("#datetimepicker7").on("dp.change", function(e) {
+    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+});
+$(document).ready( function () {
+    var tablex = $('#datatable').DataTable();
+    var table = $('#datatable2').DataTable({
+    	columnDefs:[
+    		{
+    			targets:0,
+    			checkboxes:{
+    				seletRow:true
+    			}
+    		}
+    	],
+    	select: {
+            style: 'multi'
+        }
+    });
+
+    $('#datatable2 tbody').on( 'click', 'tr', function () {
+        $(this).toggleClass('selected');
+    } );
+    $('#modalcancel').click( function () {
+    	$('#largeShoes').modal('hide');
+    } );
+    console.log(tablex.cell(0,2).nodes().to$().find('input').val())
+    $('#modalsave').click( function () {
+    	
+    	var ids = [];
+    	var i;
+    	for (i = 0; i < table.rows('.selected').data().length; i++) {
+    		ids.push(table.rows('.selected').data()[i][0]);
+    	}
+
+    	var postData = { foodid: ids };
+    	$.ajax({
+            type: "POST",
+            url: '/api/foodid',
+            data: postData,
+            success: function(data){
+            	console.log(data);
+            	var moneyfood = 0;
+                if(data.result.length>0){
+                	var content = "";
+                	
+                	for( var i=0; i <data.result.length; i++) {
+                		content += "<tr role='row'> <td  style='display:none'> <input type='number' name='idfood' value='"+data.result[i].id+"'></td>" + " <td><image src='/upload/"+ data.result[i].image + "' style='max-width:90px'></image></td> <td>" + data.result[i].name + "</td> <td>" + "<input type='number' min = '1' max = '"+data.result[i].number+"' id='row-"+i+"-number' class='numberfood' name='number' value='"+1+"'>" + "</td> <td class = 'pricefood'>" + data.result[i].price + "</td>  </tr>";
+                		moneyfood+=parseFloat(data.result[i].price);
+                	}
+                	$("#datatable tbody").html("");
+                	$("#datatable tbody").append(content);
+                	$('#datatable tbody').append("<script>$('.numberfood').bind('input', function() {var f = $('.numberfood'); var moneyfood = 0; var p = $('.pricefood');for (i = 0; i < f.length; i++) { moneyfood+=parseFloat(f[i].value)*parseFloat(p[i].textContent)} $('#showtotalfood').text(moneyfood.toLocaleString('en') + ' VNĐ'); var total = parseInt($('#showtotalhour').text().replace(',', '')) + parseInt($('#showtotalfood').text().replace(',', ''));$('#showtotal').text(total.toLocaleString('en') + ' VNĐ')});<\/script>");
+                	
+                }
+                $("#showtotalfood").text(moneyfood.toLocaleString('en') + " VNĐ");
+                var total = parseInt($("#showtotalhour").text().replace(',', '')) + parseInt($("#showtotalfood").text().replace(',', ''));
+        		$("#showtotal").text(total.toLocaleString('en') + ' VNĐ')
+            },
+            dataType: "json",
+            traditional: true
+        });
+    	$('#largeShoes').modal('hide');
+    } );
+
+    
+    $("#fbill").submit(function(e) {
+        e.preventDefault(); 
+        var $form = $("#fbill");
+        var ids = [];
+        var numbers = [];
+        var id = $("#datatable").find("input[name='idfood']");
+        var n = $("#datatable").find("input[name='number']");
+        for (i = 0; i < n.length; i++) {
+        	numbers.push(n[i].value);
+        	ids.push(id[i].value);
+    	}
+        // serialize to get fotmat name=value&name2=value2
+        // serializeArray convert to array
+        // databill = $("#fbill").serializeArray();
+        
+        var fnamecustomer = $("#fbill").find("input[name='nameCustomer']").val();
+        var fnameemployee = $("#fbill").find("select[name='nameEmployee']").find(":selected").val();
+        var froom = $("#fbill").find("select[name='room']").find(":selected").val();
+        var fstarthour = $("#fbill").find("input[name='startHour']").val();
+        var fendhour = $("#fbill").find("input[name='endHour']").val();
+        var fdate = $("#fbill").find("input[name='date']").val();
+        var fnote = $("#fbill").find("input[name='note']").val();
+        var ftotalhour = $("#fbill").find("input[name='totalHour']").val();
+        var fhourprice = parseInt($("#showtotalhour").text());
+        var fstatus = $("#fbill").find("select[name='status']").find(":selected").val();
+        $.ajax({
+            type: "POST",
+            url: '/api/savebill',
+            data: {status:fstatus,hourprice:fhourprice, totalHour: ftotalhour, nameCustomer : fnamecustomer, nameEmployee: fnameemployee, room : froom, startHour : fstarthour, endHour : fendhour, sdate : fdate, note : fnote, foodid: ids , foodnumber: numbers },
+            success: function(data){
+            	alert("Lưu thành công");
+            	$('#success').show();
+            },
+            dataType: "json",
+            traditional: true
+        });
+    });
+    function minustimeaampm(time1, time2) {
+    	//var hours1 = Number(time1.match(/^(\d+)/)[1]);
+        //var minutes1 = Number(time1.match(/:(\d+)/)[1]);
+        //var AMPM = time1.match(/\s(.*)$/)[1];
+        //if(AMPM == "PM" && hours1<12) hours1 = hours1 +12;
+        //if(AMPM == "AM" && hours1==12) hours1 = hours1 -12;
+        
+        //var hours2 = Number(time2.match(/^(\d+)/)[1]);
+        //var minutes2 = Number(time2.match(/:(\d+)/)[1]);
+        //var AMPM = time2.match(/\s(.*)$/)[1];
+        //if(AMPM == "PM" && hours2<12) hours2 = hours2 +12;
+        //if(AMPM == "AM" && hours2==12) hours2 = hours2 -12;
+        
+        //var minutesstart = hours1*60+minutes1;
+        //var minutesend = hours2*60+minutes2;
+        
+        var hours1 = Number(time1.match(/^(\d+)/)[1]);
+        var minutes1 = Number(time1.match(/:(\d+)/)[1]);
+        
+        var hours2 = Number(time2.match(/^(\d+)/)[1]);
+        var minutes2 = Number(time2.match(/:(\d+)/)[1]);
+        
+        var minutesstart = hours1*60+minutes1;
+        var minutesend = hours2*60+minutes2;
+        
+        var minute = minutesend - minutesstart;
+        if(minute<0) minute+=24*60;
+        
+        return minute;
+    }
+    
+  
+    $(".myDatepicker3, #totalhour").click(function() {
+    	setTimeout(function() {
+    		var starthour = $("#fbill").find("input[name='startHour']").val();
+        	var endhour = $("#fbill").find("input[name='endHour']").val();
+        	if((starthour.length>0) && (endhour.length>0)){
+        		var kq = minustimeaampm(starthour, endhour);
+        		var hours=parseInt(kq/60)+" giờ "+ kq%60 +" phút";
+        		$("#fbill").find("input[name='totalHour']").val(hours);
+        		var moneyroom = $("#room option:selected").data('price');
+        		var moneyhour = (parseFloat(moneyroom)*parseFloat(kq))/60;
+        		$("#showtotalhour").text(moneyhour.toLocaleString('en') + ' VNĐ');
+        		var total = parseInt($("#showtotalhour").text().replace(',', '')) + parseInt($("#showtotalfood").text().replace(',', ''));
+        		$("#showtotal").text(total.toLocaleString('en') + ' VNĐ')
+        	}
+    	}, 2000);
+    	
+    });
+    $("#count").click(function() {
+    	var starthour = $("#fbill").find("input[name='startHour']").val();
+    	var endhour = $("#fbill").find("input[name='endHour']").val();
+    	if((starthour.length>0) && (endhour.length>0)){
+    		var kq = minustimeaampm(starthour, endhour);
+    		var moneyroom = $("#room option:selected").data('price');
+    		var moneyhour = (parseFloat(moneyroom)*parseFloat(kq))/60;
+    		$("#showtotalhour").text(moneyhour.toLocaleString('en') + ' VNĐ');
+    		var total = parseInt($("#showtotalhour").text().replace(',', '')) + parseInt($("#showtotalfood").text().replace(',', ''));
+    		$("#showtotal").text(total.toLocaleString('en') + 'VNĐ')
+    	}
+    });
+    
+    
+    $(".number").on("change paste keyup", function() {
+    	console.log("ssss");
+    	   var f = $(".idfood");
+    	   var moneyfood = 0;
+    	   for (i = 0; i < f.length; i++) {
+    		   moneyfood+=parseFloat(f[i].val());
+       		}
+    	   console.log(moneyfood);
+    });
+} );
+
+</script>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+    </head>
+    <body>
+        <div class="container content" th:fragment="content-room-food">
+            <section id="section-1">
+            			<div class="input-group">
+						    <input type="text" class="form-control" placeholder="Search room name" id="search-room" th:value="${searchroom}">
+						    <div class="input-group-append">
+						      <button class="btn btn-secondary" type="button" id="btn-search-room">
+						        <i class="fa fa-search"></i>
+						      </button>
+						    </div>
+						</div>
+						<br>
+						<div th:if="${rooms.empty}" >
+							<h4 style="margin:auto;text-align: center;">No data</h4>
+						</div>
+						<div  th:each="room : ${rooms}" th:class="${ !room.status? 'col-md-3 mediabox active':'col-md-3 mediabox inactive'}" >
+							<img th:src="@{'~/employee/room.png'}" alt="img01"/>
+							<p class="id_room" th:text="${room.id}"></p>
+							<h4 th:text="${room.name}">Room 1</h4>
+							<h6 th:text="${!room.status? 'Status: Sẵn sàng' : 'Status: Bận'}"></h6>
+						</div>
+			</section>
+			<section id="section-2">
+			<div class="row">
+						<div class="input-group" style="margin-bottom: 20px;">
+						    <input type="text" class="form-control" placeholder="Search food name" id="search-food">
+						    <div class="input-group-append">
+						      <button class="btn btn-secondary" type="button" id="btn-search-food">
+						        <i class="fa fa-search"></i>
+						      </button>
+						    </div>
+						</div>
+						<div class="input-group" style="margin-bottom: 20px">
+							<button th:class="${idCategory==-1?'btn btn-warning col-md-2 btn-category':'btn btn-primary col-md-2 btn-category'}" style="margin-right: 20px;margin-bottom: 10px" type="button" data-id="-1" th:text="All"></button>
+							<button th:each="foodCategory : ${foodCategories}" th:class="${idCategory==foodCategory.id?'btn btn-warning col-md-2 btn-category':'btn btn-primary col-md-2 btn-category'}" style="margin-right: 20px;margin-bottom: 10px" type="button" th:data-id="${foodCategory.id}" th:text="${foodCategory.name}"></button>
+						</div>
+						<br>
+						<div th:each="food : ${foods}" class="mediabox col-sm-3">
+							<img th:if="${food.image != ''}" th:src="@{'~/upload/' + ${food.image}}" style="max-width:190px"></img>
+							<img th:if="${food.image == ''}" th:src="@{'~/employee/food.png'}" style="max-width:190px"></img>
+							<h4 th:text="${food.name}">Food 1</h4>
+							<h6 th:text="${food.number}"></h6>
+							<input type="text" name="id-food" th:value="${food.id}" style="display:none;">
+						</div>
+			</div>
+			</section>
+        </div>
+        <div class="row" th:fragment="content-food">
+        	
+        				<div class="input-group" style="margin-bottom: 20px;">
+						    <input type="text" class="form-control" placeholder="Search food name" id="search-food">
+						    <div class="input-group-append">
+						      <button class="btn btn-secondary" type="button" id="btn-search-food">
+						        <i class="fa fa-search"></i>
+						      </button>
+						    </div>
+						</div>
+						<div class="input-group" style="margin-bottom: 20px">
+							<button th:class="${idCategory==-1?'btn btn-warning col-md-2 btn-category':'btn btn-primary col-md-2 btn-category'}" style="margin-right: 20px;margin-bottom: 10px" type="button" data-id="-1" th:text="All"></button>
+							<button th:each="foodCategory : ${foodCategories}" th:class="${idCategory==foodCategory.id?'btn btn-warning col-md-2 btn-category':'btn btn-primary col-md-2 btn-category'}" style="margin-right: 20px;margin-bottom: 10px" type="button" th:data-id="${foodCategory.id}" th:text="${foodCategory.name}"></button>
+						</div>
+						<br>
+						<div th:each="food : ${foods}" class="mediabox col-sm-3">
+							<img th:if="${food.image != ''}" th:src="@{'~/upload/' + ${food.image}}" style="max-width:190px"></img>
+							<img th:if="${food.image == ''}" th:src="@{'~/employee/food.png'}" style="max-width:190px"></img>
+							<h4 th:text="${food.name}">Food 1</h4>
+							<h6 th:text="${food.number}"></h6>
+							<input type="text" name="id-food" th:value="${food.id}" style="display:none;">
+							
+						</div>
+						<script type="text/javascript">
+						$("#btn-search-food").click(function(){
+							var valueroom = $("#search-food").val();
+							if(valueroom=='')
+								valueroom='-1';
+							stringurl = '/employee/load/content-food/' + valueroom;
+							$('#section-2').load(stringurl);
+						});
+						$("#section-2 .mediabox").click(function(){
+							if($("#selected-room").css('display') == 'none'){
+								alert("Bạn chưa chọn phòng");}
+							else{
+								var idroom = $('select[name ="idroom"]') .val();
+								var inputidfood = $(this).children('input').get(0);
+								var snumber = $(this).children('h6').get(0);
+								var number = parseInt($(snumber).text());
+								if(number>0){
+									idfood = parseInt($(inputidfood).val());
+									reloadMenuFood(idroom, idfood);
+									$(snumber).text(number-1)
+								}
+							}
+						});
+						function reloadMenuFood(idroom, idfood) {
+							stringurl = '/employee/load/content-menu-food/' + idroom + '/' + idfood;
+							$('#menu-food').load(stringurl);
+						};
+						$(".btn-category").click(function(){
+							stringurl = '/employee/load/content-food-with-category/' + $(this).data('id');
+							$('#section-2').load(stringurl);
+						});
+						</script>
+        </div>
+    </body>
+</html>

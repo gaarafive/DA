@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+<meta charset="UTF-8">
+<title>Invoice</title>
+</head>
+<body>
+<style>
+table, th, td {
+  border: 0px solid black;
+  border-collapse: collapse;
+  width:50%;
+}
+th, td {
+  padding: 5px;
+  text-align: left;    
+}
+</style>
+<h3>HÓA ĐƠN </h3>
+<br>
+		<table>
+            <tr>
+                <th>Giờ bắt đầu</th>
+                <th>Giờ kết thúc</th>
+                <th>Tổng (phút)</th>
+            </tr>
+            <tr>
+                <td> [(${order.starthour})] </td>
+                <td> [(${order.endhour})] </td>
+                <td> [(${order.totalhour})] </td>
+            </tr>
+
+        </table>
+        <br>
+        <div th:text="${'Tổng tiền giờ:...................................' + bill.hourprice} + ' VNĐ'"></div>
+        <br>
+		<table>
+            <tr>
+                <th>Id</th>
+                <th>Món ăn</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+            </tr>
+            <tr data-iterate="food" th:each="food, iterator : ${foods}">
+                <td> [(${iterator.count})] </td>
+                <td th:text="${food.food.name}"></td>
+                <td th:text="${food.number}"></td>
+                <td th:text="${food.price}"></td>
+            </tr>
+        </table>
+        <br>
+        <div th:text="${'Tổng tiền món ăn:...............................' + bill.foodprice} + ' VNĐ'"></div>
+        <br>
+        <br>
+        <div>Tổng tiền:</div>
+        <div th:text="${'.................................................................' + bill.totalprice} + ' VNĐ'"></div>
+        <br>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Registration</title>
+</head>
+<body>
+
+ <div class="container">
+  <form th:action="@{/registration}" th:object="${user}" method="post">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" th:field="*{name}" /></td>
+                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username</td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" th:field="*{password}" /></td>
+                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password</td>
+
+                </tr>
+                <tr>
+                    <td>Confirm Password:</td>
+                    <td><input type="password" th:field="*{confirmPassword}" /></td>
+                    <td th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">password</td>
+                    <td>
+                    	<p class="error-message"
+                                   th:if="${#fields.hasGlobalErrors()}"
+                                   th:each="error : ${#fields.errors('global')}"
+                                   th:text="${error}">Validation error</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Role</td>  
+                    <td>
+	                    <select class="form-control" th:field="*{role}">
+		                    <option value="">-SELECT-</option>
+		                    <option value="ROLE_EMPLOYEE">EMPLOYEE</option>
+		                    <option value="ROLE_ADMIN">ADMIN</option>
+	                    </select>
+                    </td>
+                    <td th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></td>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+ </div>
+
+</body>
+</html>
