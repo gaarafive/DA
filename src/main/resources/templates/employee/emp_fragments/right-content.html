@@ -19,9 +19,9 @@
 		              <div class="col-sm-3">
 							<label>Thanh toán: </label>
 			                 <div>
-			                        <select class="form-control" id="role" th:field="*{status}">
-					                    <option th:value="'1'" th:text="Paid"></option>
-					                    <option th:value="'0'" th:text="UnPaid"></option>
+			                        <select class="form-control" id="role" th:field="*{status}" disabled="true">
+					                    <option th:value="'1'" th:text="'Đã thanh toán'"></option>
+					                    <option th:value="'0'" th:text="'Chưa thanh toán'" selected></option>
 				                    </select>
 			                </div>
 			               

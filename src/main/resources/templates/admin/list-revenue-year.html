@@ -111,17 +111,17 @@ $(document).ready( function () {
     $('#chooseyear').on('change', function() {
     	var month = $('#choosemonth').val();
     	if(month==0){
-    		window.location.href = '/admin/list-revenue-year/' + $(this).val();
+    		window.location.href = '/admin/revenue/list-revenue-year/' + $(this).val();
     	} else {
-    		window.location.href = '/admin/list-revenue/' + $(this).val() + '/' + month;
+    		window.location.href = '/admin/revenue/list-revenue/' + $(this).val() + '/' + month;
     	}
     });
     $('#choosemonth').on('change', function() {
     	var year = $('#chooseyear').val();
     	if($(this).val()==0){
-    		window.location.href = '/admin/list-revenue-year/' + year;
+    		window.location.href = '/admin/revenue/list-revenue-year/' + year;
     	} else {
-    		window.location.href = '/admin/list-revenue/' + year + '/' + $(this).val();
+    		window.location.href = '/admin/revenue/list-revenue/' + year + '/' + $(this).val();
     	}
     });
     

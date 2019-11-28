@@ -37,7 +37,7 @@ import com.example.karaoke.entity.Room;
 import com.example.karaoke.entity.User;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin/revenue/")
 public class RevenueController {
 	@Autowired
 	BillService rService;

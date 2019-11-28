@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -26,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.csrf().disable()
 			.authorizeRequests()
 				.antMatchers("/registration","/api/**").permitAll()
+				.antMatchers("/admin/revenue/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_ACCOUNTANT')")
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 				.antMatchers("/employee/**").access("hasRole('ROLE_EMPLOYEE') or hasRole('ROLE_ADMIN')")
 				.antMatchers("/**").permitAll()

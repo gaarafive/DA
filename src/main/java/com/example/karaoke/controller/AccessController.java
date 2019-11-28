@@ -26,11 +26,12 @@ public class AccessController implements ErrorController {
 	@RequestMapping("/login-success")
 	public String welcome(Authentication authentication)
 	{
-		boolean admin = user.hasRole("ROLE_ADMIN");
-		if(admin) {
+		if(user.hasRole("ROLE_ADMIN")) {
 			return "redirect:/admin/list-user";
-			}
-		return "redirect:/employee/home";
+		}
+		else if(user.hasRole("ROLE_ACCOUNTANT"))
+			return "redirect:/admin/revenue/list-revenue-year/2019";
+		else return "redirect:/employee/home";
 	}
 	
 	@RequestMapping(value = "/login")
